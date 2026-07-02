@@ -24,6 +24,15 @@ export default function Home() {
   const [isFormUnlocked, setIsFormUnlocked] = useState(true);
   const [btnHoverPos, setBtnHoverPos] = useState({ x: 0, y: 0 });
   const [isBtnHovered, setIsBtnHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); // Check on mount
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const btnRef = useRef(null);
 
   // Cursor Tether State
@@ -427,16 +436,21 @@ export default function Home() {
                 <h3 className="font-display text-xl font-bold mb-6 text-[#cb9e0bff] text-center">Certifications</h3>
                 <div className="flex flex-col gap-6 relative z-10 w-full max-w-sm items-center">
                   {[
-                    { name: "Google AI Certification", icon: SiGoogle },
-                    { name: "Hedera Hashgraph Certification", icon: SiHedera }
-                  ].map((tech) => (
-                    <div key={tech.name} className="flex flex-col items-center gap-3 group cursor-default">
-                      <div className="w-12 h-12 rounded-lg bg-neutral-800/50 flex items-center justify-center border border-neutral-800 group-hover:border-[#cb9e0bff]/50 group-hover:bg-[#cb9e0bff]/10 transition-colors duration-300 shrink-0">
-                        <tech.icon className="text-xl text-neutral-400 group-hover:text-[#cb9e0bff] transition-colors duration-300" />
-                      </div>
-                      <span className="text-sm font-medium text-neutral-300 group-hover:text-white transition-colors text-center">{tech.name}</span>
-                    </div>
-                  ))}
+                    { name: "Google AI Certification", icon: SiGoogle, href: "https://www.coursera.org/account/accomplishments/professional-cert/certificate/LHBLIGLQSDX7" },
+                    { name: "Machine Learning Specialization", icon: FaBrain }
+                  ].map((tech) => {
+                    const Tag = tech.href ? "a" : "div";
+                    const linkProps = tech.href ? { href: tech.href, target: "_blank", rel: "noopener noreferrer" } : {};
+                    
+                    return (
+                      <Tag key={tech.name} {...linkProps} className={`flex flex-col items-center gap-3 group ${tech.href ? 'cursor-pointer' : 'cursor-default'}`}>
+                        <div className="w-12 h-12 rounded-lg bg-neutral-800/50 flex items-center justify-center border border-neutral-800 group-hover:border-[#cb9e0bff]/50 group-hover:bg-[#cb9e0bff]/10 transition-colors duration-300 shrink-0">
+                          <tech.icon className="text-xl text-neutral-400 group-hover:text-[#cb9e0bff] transition-colors duration-300" />
+                        </div>
+                        <span className="text-sm font-medium text-neutral-300 group-hover:text-white transition-colors text-center">{tech.name}</span>
+                      </Tag>
+                    );
+                  })}
                 </div>
               </motion.div>
             </div>
@@ -543,8 +557,8 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                        animate={{ opacity: 1, scale: 1, x: -40, y: -200 }}
-                        drag dragConstraints={{ top: -250, bottom: -150, left: -90, right: 10 }} dragElastic={0.1}
+                        animate={{ opacity: 1, scale: 1, x: isMobile ? -60 : -40, y: isMobile ? 80 : -200 }}
+                        drag dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} dragElastic={0.1}
                         whileHover={{ scale: 1.2, rotate: 10 }}
                         className="absolute w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-[#cb9e0bff]/40 flex items-center justify-center text-[#cb9e0bff] z-0 shadow-[0_0_15px_rgba(203,158,11,0.2)] cursor-grab active:cursor-grabbing"
                       >
@@ -555,8 +569,8 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                        animate={{ opacity: 1, scale: 1, x: 300, y: 200 }}
-                        drag dragConstraints={{ top: 150, bottom: 250, left: 250, right: 350 }} dragElastic={0.1}
+                        animate={{ opacity: 1, scale: 1, x: isMobile ? 60 : 300, y: isMobile ? 120 : 200 }}
+                        drag dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} dragElastic={0.1}
                         whileHover={{ scale: 1.2, rotate: -10 }}
                         className="absolute w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-[#cb9e0bff]/40 flex items-center justify-center text-[#cb9e0bff] z-0 shadow-[0_0_15px_rgba(203,158,11,0.2)] cursor-grab active:cursor-grabbing"
                       >
@@ -565,8 +579,8 @@ export default function Home() {
                       <motion.a
                         href="mailto:adamfartout1@gmail.com"
                         initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                        animate={{ opacity: 1, scale: 1, x: 320, y: -100 }}
-                        drag dragConstraints={{ top: -150, bottom: -50, left: 270, right: 370 }} dragElastic={0.1}
+                        animate={{ opacity: 1, scale: 1, x: isMobile ? -30 : 320, y: isMobile ? 180 : -100 }}
+                        drag dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} dragElastic={0.1}
                         whileHover={{ scale: 1.2, rotate: 15 }}
                         className="absolute w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-[#cb9e0bff]/40 flex items-center justify-center text-[#cb9e0bff] z-0 shadow-[0_0_15px_rgba(203,158,11,0.2)] cursor-grab active:cursor-grabbing"
                       >
@@ -577,8 +591,8 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                        animate={{ opacity: 1, scale: 1, x: -80, y: 150 }}
-                        drag dragConstraints={{ top: 50, bottom: 250, left: -180, right: 20 }} dragElastic={0.1}
+                        animate={{ opacity: 1, scale: 1, x: isMobile ? -100 : -80, y: isMobile ? 130 : 150 }}
+                        drag dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} dragElastic={0.1}
                         whileHover={{ scale: 1.2, rotate: 20 }}
                         className="absolute w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-[#cb9e0bff]/40 flex items-center justify-center text-[#cb9e0bff] z-0 shadow-[0_0_15px_rgba(203,158,11,0.2)] cursor-grab active:cursor-grabbing"
                       >
@@ -589,8 +603,8 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                        animate={{ opacity: 1, scale: 1, x: 100, y: -150 }}
-                        drag dragConstraints={{ top: -200, bottom: -50, left: 20, right: 180 }} dragElastic={0.1}
+                        animate={{ opacity: 1, scale: 1, x: isMobile ? 80 : 100, y: isMobile ? 40 : -150 }}
+                        drag dragConstraints={{ top: -300, bottom: 300, left: -300, right: 300 }} dragElastic={0.1}
                         whileHover={{ scale: 1.2, rotate: -15 }}
                         className="absolute w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-[#cb9e0bff]/40 flex items-center justify-center text-[#cb9e0bff] z-0 shadow-[0_0_15px_rgba(203,158,11,0.2)] cursor-grab active:cursor-grabbing"
                       >
