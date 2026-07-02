@@ -441,7 +441,7 @@ export default function Home() {
                   ].map((tech) => {
                     const Tag = tech.href ? "a" : "div";
                     const linkProps = tech.href ? { href: tech.href, target: "_blank", rel: "noopener noreferrer" } : {};
-                    
+
                     return (
                       <Tag key={tech.name} {...linkProps} className={`flex flex-col items-center gap-3 group ${tech.href ? 'cursor-pointer' : 'cursor-default'}`}>
                         <div className="w-12 h-12 rounded-lg bg-neutral-800/50 flex items-center justify-center border border-neutral-800 group-hover:border-[#cb9e0bff]/50 group-hover:bg-[#cb9e0bff]/10 transition-colors duration-300 shrink-0">
@@ -630,7 +630,7 @@ export default function Home() {
                 WebkitTextStroke: "2px #cb9e0bff",
               }}
             >
-              Made with LOVE
+              Made with lOve
             </p>
             <p className="text-muted text-xs font-mono mt-8 tracking-widest uppercase">
               © {new Date().getFullYear()} Adam Fartout
